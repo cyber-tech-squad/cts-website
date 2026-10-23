@@ -1,0 +1,91 @@
+backend:
+  name: github
+  repo: VOTRE-ORGANISATION/VOTRE-DEPOT
+  branch: main
+  # Configurez un flux OAuth GitHub (ou Git Gateway) avant la mise en production.
+
+locale: fr
+publish_mode: editorial_workflow
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: blog
+    label: Blog / Veille
+    label_singular: Article
+    folder: content/blog
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Date de publication, name: date, widget: datetime }
+      - { label: Résumé, name: excerpt, widget: text }
+      - { label: Catégorie, name: category, widget: string, default: Veille }
+      - { label: Image de couverture, name: cover, widget: image, required: false }
+      - { label: Article, name: body, widget: markdown }
+
+  - name: events
+    label: Événements
+    label_singular: Événement
+    folder: content/events
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - { label: Lieu, name: location, widget: string }
+      - { label: Type, name: kind, widget: select, options: [Atelier, CTF, Conférence, Rencontre] }
+      - { label: Résumé, name: excerpt, widget: text }
+      - { label: Image, name: cover, widget: image, required: false }
+      - { label: Description, name: body, widget: markdown }
+
+  - name: team
+    label: Bureau
+    label_singular: Membre du bureau
+    folder: content/team
+    create: true
+    identifier_field: firstName
+    extension: yml
+    format: yaml
+    slug: "{{slug}}"
+    fields:
+      - { label: Prénom, name: firstName, widget: string }
+      - { label: Nom, name: lastName, widget: string }
+      - { label: Rôle, name: role, widget: string, hint: "Président, Trésorier…" }
+      - { label: Description, name: description, widget: text }
+      - { label: Photo de profil, name: photo, widget: image, required: false }
+      - { label: Ordre d’affichage, name: order, widget: number, value_type: int, default: 10 }
+
+  - name: shop
+    label: Boutique
+    label_singular: Produit
+    folder: content/shop
+    create: true
+    identifier_field: name
+    extension: yml
+    format: yaml
+    slug: "{{slug}}"
+    fields:
+      - { label: Nom du produit, name: name, widget: string }
+      - { label: Prix (FCFA), name: price, widget: number, value_type: int, min: 0 }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image }
+      - {
+          label: Badge,
+          name: badge,
+          widget: select,
+          options: [Nouveau, Disponible, "Bientôt", Épuisé],
+          required: false,
+        }
+      - { label: Libellé de commande, name: actionLabel, widget: string, default: Commander }
+      - {
+          label: Lien de commande,
+          name: actionUrl,
+          widget: string,
+          hint: "URL https:// ou lien WhatsApp",
+        }
+      - { label: Ordre d’affichage, name: order, widget: number, value_type: int, default: 10 }
