@@ -1,0 +1,74 @@
+/* Styles propres à la page À propos (a-propos/a-propos.css) */
+
+.cts .pill { padding: 5px 14px; }
+
+/* ----- mission + pour qui ----- */
+.cts .ap-duo { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+.cts .mission-card { background: linear-gradient(135deg, #0E7A55 0%, #0B5E45 55%, #0A3F31 125%); color: #fff; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cts .mission-card .kicker { color: var(--neon); margin: 0; }
+.cts .mission-card h3 { font-family: var(--display); font-size: 19px; line-height: 1.3; }
+.cts .mission-card p { color: #C9DEDB; font-size: 15px; }
+.cts .who-card { padding: 24px; }
+.cts .who-card h3 { font-size: 18px; line-height: 1.3; margin-bottom: 10px; }
+
+/* ----- objectifs et valeurs : cartes à icône ----- */
+.cts .obj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cts .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cts .obj { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.cts .obj .ico { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #CDF8E4 0%, #8EE9BF 100%); color: var(--accent-dark); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.cts .obj strong { font-size: 15.5px; }
+.cts .obj p { color: var(--muted); font-size: 14px; }
+
+/* ----- notre approche : 4 étapes ----- */
+.cts .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cts .step { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--green); border-radius: 14px; padding: 16px; position: relative; }
+.cts .step .num { position: absolute; top: 12px; right: 14px; font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--green); }
+.cts .step i { font-size: 24px; color: var(--accent); line-height: 1; }
+.cts .step strong { display: block; font-family: var(--display); font-size: 15px; margin: 8px 0 4px; }
+.cts .step p { color: var(--muted); font-size: 14px; }
+.cts .ethic { display: flex; gap: 12px; align-items: flex-start; margin-top: 14px; background: var(--mist); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 14.5px; }
+.cts .ethic i { color: var(--accent); font-size: 20px; line-height: 1.2; }
+
+/* ----- pourquoi rejoindre ----- */
+.cts .why { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+.cts .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.cts .checks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+.cts .checks i { color: var(--accent); margin-top: 2px; line-height: 1.4; }
+
+/* ----- parcours : chronologie ----- */
+.cts .timeline { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; }
+.cts .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: repeating-linear-gradient(to bottom, var(--green) 0 8px, transparent 8px 14px); opacity: .6; }
+.cts .timeline li { position: relative; padding-bottom: 18px; }
+.cts .timeline li:last-child { padding-bottom: 0; }
+.cts .timeline li.now::before { background: var(--green); }
+.cts .timeline li::before { content: ""; position: absolute; left: -34px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 3px solid var(--green); }
+.cts .timeline .when { display: inline-block; background: var(--mist); color: var(--teal); font-weight: 700; font-size: 12px; border-radius: 6px; padding: 2px 8px; margin-bottom: 4px; }
+.cts .timeline strong { display: block; font-size: 16px; }
+.cts .timeline p { color: var(--muted); font-size: 14.5px; }
+
+/* ----- identité ----- */
+.cts .ident { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cts .ident-item { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.cts .ident-item i { color: var(--accent); font-size: 20px; line-height: 1; margin-bottom: 4px; }
+.cts .ident-item .lbl { color: var(--muted); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.cts .ident-item strong { font-size: 15px; line-height: 1.35; }
+
+/* ----- mode hacker : éléments de la page À propos ----- */
+.cts.hacker .obj, .cts.hacker .step, .cts.hacker .ident-item { background: var(--card); border-color: var(--line); box-shadow: none; }
+.cts.hacker .mission-card { background: var(--card-hi); color: #fff; border: 1px solid rgba(107, 255, 174, 0.35); box-shadow: 0 0 40px rgba(16, 150, 100, 0.2); }
+.cts.hacker .mission-card p { color: #D3EEDF; }
+.cts.hacker .who-card .kicker { color: var(--neon); }
+.cts.hacker .obj .ico { background: rgba(107, 255, 174, 0.1); color: var(--neon); border: 1px solid var(--line); }
+.cts.hacker .step { border-top-color: var(--neon); }
+.cts.hacker .ethic { background: rgba(107, 255, 174, 0.07); }
+.cts.hacker .timeline .when { background: rgba(107, 255, 174, 0.14); color: var(--neon); }
+.cts.hacker .timeline li::before { background: #04100B; border-color: var(--neon); }
+
+@media (max-width: 820px) {
+  .cts .ap-duo, .cts .why { grid-template-columns: 1fr; }
+  .cts .obj-grid, .cts .values, .cts .ident { grid-template-columns: 1fr 1fr; }
+  .cts .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .cts .obj-grid, .cts .values, .cts .ident, .cts .steps { grid-template-columns: 1fr; }
+}
