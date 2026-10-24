@@ -88,10 +88,7 @@ export function SiteNavigation() {
         <span />
         <span />
       </button>
-      <div
-        id="primary-navigation-links"
-        className={`nav-links${isMenuOpen ? " is-open" : ""}`}
-      >
+      <div id="primary-navigation-links" className={`nav-links${isMenuOpen ? " is-open" : ""}`}>
         {links.map((link) => {
           const isSectionLink = "section" in link;
           const active = isSectionLink

@@ -17,7 +17,8 @@ d’adhésion.
 
 ## Démarrage local
 
-Prérequis : Node.js 20.9 ou supérieur.
+Prérequis : Node.js 24.x, partagé avec la CI et configuré dans `package.json`
+pour les builds Vercel. `.nvmrc` fournit la version aux gestionnaires compatibles.
 
 ```bash
 npm install
@@ -79,15 +80,15 @@ Decap configuré.
 
 ## Variables d’environnement
 
-| Variable | Usage | Obligatoire pour l’adhésion |
-| --- | --- | --- |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Clé publique du widget anti-spam | Oui |
-| `TURNSTILE_SECRET_KEY` | Vérification serveur Turnstile | Oui |
-| `SUPABASE_URL` | URL du projet Supabase | Oui |
-| `SUPABASE_SERVICE_ROLE_KEY` | Accès serveur à la base | Oui |
-| `RESEND_API_KEY` | Envoi de confirmations | Non |
-| `RESEND_FROM_EMAIL` | Expéditeur vérifié Resend | Non |
-| `NEXT_PUBLIC_SITE_URL` | URL publique prévue pour le site | Actuellement non utilisée dans le code |
+| Variable                         | Usage                            | Obligatoire pour l’adhésion            |
+| -------------------------------- | -------------------------------- | -------------------------------------- |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Clé publique du widget anti-spam | Oui                                    |
+| `TURNSTILE_SECRET_KEY`           | Vérification serveur Turnstile   | Oui                                    |
+| `SUPABASE_URL`                   | URL du projet Supabase           | Oui                                    |
+| `SUPABASE_SERVICE_ROLE_KEY`      | Accès serveur à la base          | Oui                                    |
+| `RESEND_API_KEY`                 | Envoi de confirmations           | Non                                    |
+| `RESEND_FROM_EMAIL`              | Expéditeur vérifié Resend        | Non                                    |
+| `NEXT_PUBLIC_SITE_URL`           | URL publique prévue pour le site | Actuellement non utilisée dans le code |
 
 Les valeurs locales sont à mettre dans `.env.local`, ignoré par Git. Ne
 committez jamais de clé privée, en particulier `SUPABASE_SERVICE_ROLE_KEY`.
@@ -139,29 +140,66 @@ npm run check        # Formatage + vérification des types
 npm run build        # Construit l’application de production
 ```
 
-Le déploiement continu Vercel et ses variables d’environnement doivent être
-configurés sur le dépôt et le projet Vercel réels. Les offres gratuites et leurs
-quotas peuvent évoluer ; un coût mensuel nul dépend des offres des fournisseurs.
+### Intégration continue
+
+`.github/workflows/ci.yml` vérifie chaque Pull Request ciblant `main` et chaque
+mise à jour directe de `main`. Le job installe les versions du lockfile avec
+`npm ci`, puis exécute `npm run check` et `npm run build`. Il ne modifie pas le
+dépôt et n’a besoin d’aucun secret applicatif. Si le contrôle Prettier échoue,
+corrigez localement avec `npm run format`, inspectez les changements, puis
+relancez `npm run check` avant de pousser.
+
+Pour bloquer une fusion, configurez dans GitHub une règle de branche ou un
+ruleset sur `main` : Pull Request obligatoire, une approbation d’un autre
+développeur, conversations résolues, et contrôle requis correspondant au job CI
+(GitHub affiche normalement `CI / validate`). Identifiez le nom exact dans la
+première exécution réussie avant de l’ajouter. Les administrateurs ont
+normalement un chemin de contournement ; choisissez explicitement si le
+propriétaire doit pouvoir le faire en urgence.
+
+Vercel doit rester connecté au dépôt GitHub : ses builds natifs fournissent les
+prévisualisations des Pull Requests et le déploiement de production après
+fusion sur la branche configurée comme production (`main`). Ne créez pas de
+workflow Vercel séparé dans GitHub Actions. La CI GitHub compile aussi le site
+pour faire respecter le contrôle obligatoire ; un build Vercel distinct reste
+nécessaire pour produire le déploiement. Configurez des variables différentes
+pour Preview et Production, et utilisez l’action de rollback Vercel si une
+version publiée doit être annulée.
+
+Dans Vercel, sélectionnez Node.js `24.x` dans **Settings → Build and
+Deployment → Node.js Version**. `package.json` déclare également `24.x` afin de
+garder les déploiements alignés avec `.nvmrc` et la CI.
+
+Le forfait Vercel Hobby est limité à l’usage personnel non commercial. Le site
+du club comprend une boutique et des liens de commande : confirmez l’éligibilité
+auprès de Vercel avant de considérer Hobby comme solution de production. Les
+déploiements Preview consomment aussi des ressources de build, transfert et
+fonctions selon leur usage.
+
+Les paramètres du projet Vercel (plan, domaines, variables et branche de
+production) sont gérés hors du dépôt et doivent être vérifiés dans son tableau de
+bord. Les offres gratuites et leurs quotas peuvent évoluer ; un coût mensuel nul
+dépend des offres des fournisseurs.
 
 ## État du projet
 
-Le dépôt contient le socle du site, les pages principales, le thème clair/sombre,
-la navigation responsive, des exemples de contenu, l’interface Decap, l’API
-d’adhésion et la migration SQL initiale. Le projet est actuellement sur la
-branche `dev`.
+Le dépôt contient le socle du site, la CI GitHub Actions, les pages principales,
+le thème clair/sombre, la navigation responsive, des exemples de contenu,
+l’interface Decap, l’API d’adhésion et la migration SQL initiale. La branche
+cible des Pull Requests et la branche de production prévues sont `main`.
 
 Avant une mise en production, il reste à :
 
-1. Vérifier le projet avec `npm run check` et `npm run build` dans
-   l’environnement local.
+1. Pousser le workflow, créer une Pull Request de validation et rendre son statut
+   obligatoire dans les règles de branche GitHub.
 2. Renseigner et vérifier les variables d’environnement de développement,
    prévisualisation et production.
 3. Appliquer la migration SQL au projet Supabase réel.
 4. Remplacer le dépôt et la branche fictifs dans Decap, puis configurer et tester
    son authentification GitHub.
-5. Relier Vercel au dépôt, choisir la branche de production et vérifier les
-   en-têtes, le formulaire, les emails et le parcours éditorial sur les domaines
-   finaux.
+5. Vérifier dans Vercel le plan autorisé pour le club, la branche de production,
+   les environnements Preview/Production, puis tester le formulaire, les emails
+   et le parcours éditorial sur les domaines finaux.
 
 Les intégrations externes ne sont pas considérées comme opérationnelles tant que
 leurs comptes, clés et domaines ne sont pas configurés et validés.
