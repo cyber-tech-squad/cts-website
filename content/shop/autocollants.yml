@@ -1,0 +1,9 @@
+name: Autocollant Cyber Tech Squad
+price: 500
+description: Le logo rond du club, pour décorer ton PC ou ton téléphone.
+image: /images/shop/autocollant-logo.jpg
+category: Autocollants
+badge: Nouveau
+actionLabel: Commander
+actionUrl: https://wa.me/
+order: 1

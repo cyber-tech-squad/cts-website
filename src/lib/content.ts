@@ -10,7 +10,14 @@ const CONTENT_ROOT = path.join(process.cwd(), "content");
 const FRONTMATTER_PATTERN = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/;
 
 const nonEmptyText = z.string().trim().min(1);
+const optionalText = nonEmptyText.optional();
 const optionalImage = z.string().trim().optional().or(z.literal(""));
+const optionalHttpUrl = z
+  .string()
+  .trim()
+  .refine(isHttpUrl, { message: "Le lien doit commencer par http:// ou https://." })
+  .optional()
+  .or(z.literal(""));
 const displayOrder = z.number().int().min(0).optional();
 const contentDate = z.iso.datetime({ offset: true });
 
@@ -22,13 +29,24 @@ const teamMemberSchema = z.object({
   photo: optionalImage,
   order: displayOrder,
   slug: nonEmptyText,
+  // --- Ajouts pour la page Équipe (tous optionnels : les anciens fichiers restent valides) ---
+  level: z.enum(["coordinateur", "responsable", "adjoint"]).optional(),
+  pole: z.enum(["technique", "cybersecurite", "communication", "administratif-finances"]).optional(),
+  filiere: optionalText,
+  memberSince: z.union([z.number().int().min(2000), nonEmptyText]).optional(),
+  skills: z.array(nonEmptyText).optional(),
+  linkedin: optionalHttpUrl,
+  github: optionalHttpUrl,
 });
 
 const productSchema = z.object({
   name: nonEmptyText,
   price: z.number().int().min(0),
   description: nonEmptyText,
-  image: nonEmptyText,
+  // Optionnelle : sans photo, la boutique affiche une icône selon la catégorie.
+  image: optionalImage,
+  // Optionnelle : sans catégorie, l'article est classé dans "Accessoires".
+  category: z.enum(["Autocollants", "Vêtements", "Accessoires"]).optional(),
   badge: z.enum(["Nouveau", "Disponible", "Bientôt", "Épuisé"]).optional(),
   actionLabel: nonEmptyText,
   actionUrl: z.string().url().refine(isAllowedActionUrl, {
@@ -70,6 +88,14 @@ type ContentSchema<T> = z.ZodType<T>;
 function isAllowedActionUrl(value: string): boolean {
   try {
     return ["http:", "https:", "mailto:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
+function isHttpUrl(value: string): boolean {
+  try {
+    return ["http:", "https:"].includes(new URL(value).protocol);
   } catch {
     return false;
   }

@@ -1,0 +1,8 @@
+name: Polo Cyber Tech Squad
+price: 5000
+description: Polo bleu marine du club, avec le logo CTS sur la poitrine et un grand logo dans le dos.
+image: /images/shop/polo-cts.jpg
+category: Vêtements
+actionLabel: Commander
+actionUrl: https://wa.me/
+order: 2
