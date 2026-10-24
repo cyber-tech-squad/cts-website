@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import PageShell from "../shared/PageShell";
 import Logo from "../shared/Logo";
 import { CTS_LOGO } from "../shared/logocts";
@@ -115,10 +116,10 @@ function Home() {
               développement et de l'innovation.
             </p>
             <div className="hero-cta">
-              <Link to="/adhesion" className="btn btn-primary">
+              <Link href="/adhesion" className="btn btn-primary">
                 Rejoindre le club
               </Link>
-              <Link to="/activites" className="btn btn-ghost">
+              <Link href="/activites" className="btn btn-ghost">
                 Voir nos activités
               </Link>
             </div>
@@ -180,7 +181,7 @@ function Home() {
               </div>
             ))}
           </div>
-          <Link to="/activites" className="more-link">Voir toutes les activités</Link>
+          <Link href="/activites" className="more-link">Voir toutes les activités</Link>
         </section>
 
         {/* ----- Actualités + Ressources ----- */}
@@ -204,7 +205,7 @@ function Home() {
                   <span key={r}>{r}</span>
                 ))}
               </div>
-              <Link to="/ressources" className="more">
+              <Link href="/ressources" className="more">
                 Parcourir les ressources
               </Link>
             </div>
@@ -220,13 +221,13 @@ function Home() {
               </h2>
               <p className="sub">Porte les couleurs du club : autocollants, polos et plus encore.</p>
             </div>
-            <Link to="/boutique" className="more-link">
+            <Link href="/boutique" className="more-link">
               Voir toute la boutique <i className="bi bi-arrow-right" aria-hidden="true"></i>
             </Link>
           </div>
           <div className="shop-grid">
             {products.map((p) => (
-              <Link key={p.name} to="/boutique" className="prod">
+              <Link key={p.name} href="/boutique" className="prod">
                 <span className="pic" aria-hidden="true"><i className={`bi bi-${p.icon}`}></i></span>
                 <span>
                   <strong>{p.name}</strong>
@@ -234,7 +235,7 @@ function Home() {
                 </span>
               </Link>
             ))}
-            <Link to="/boutique" className="shop-all">
+            <Link href="/boutique" className="shop-all">
               Tout voir
               <i className="bi bi-arrow-right" aria-hidden="true"></i>
             </Link>
@@ -252,7 +253,7 @@ function Home() {
               <span className="kicker">Bureau</span>
               <h3>L'équipe étudiante</h3>
               <p>Les étudiants qui organisent les ateliers et animent le club.</p>
-              <Link to="/equipe" className="lnk">Rencontrer le bureau</Link>
+              <Link href="/equipe" className="lnk">Rencontrer le bureau</Link>
             </div>
             <div className="card">
               <span className="kicker">Université</span>
@@ -266,7 +267,7 @@ function Home() {
               <span className="kicker">Partenaires</span>
               <h3>Nos partenaires</h3>
               <p>Espace réservé aux organisations qui soutiennent le club.</p>
-              <Link to="/equipe" className="lnk">Voir les partenaires</Link>
+              <Link href="/equipe" className="lnk">Voir les partenaires</Link>
             </div>
           </div>
         </section>
@@ -278,7 +279,7 @@ function Home() {
               <h2>Prêt à rejoindre la Squad ?</h2>
               <p>Ouvert à tous les étudiants de l'UADB, quel que soit le niveau.</p>
             </div>
-            <Link to="/adhesion" className="btn">
+            <Link href="/adhesion" className="btn">
               Adhérer au club
             </Link>
           </div>

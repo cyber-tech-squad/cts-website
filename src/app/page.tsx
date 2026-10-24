@@ -1,3 +1,5 @@
+import Home from "@/views/home";
+
 export default function Page() {
-  return <p>Accueil en construction</p>;
+  return <Home />;
 }
