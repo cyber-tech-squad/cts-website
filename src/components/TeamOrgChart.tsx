@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import type { OrgBranch, OrgPerson } from "@/lib/team-structure";
 
 type AvatarSize = "sm" | "md" | "lg";
@@ -140,8 +141,13 @@ export function TeamOrgChart({
     if (!selected && dialog.open) dialog.close();
   }, [selected]);
 
-  // On ne garde que les pôles où au moins une personne a une vraie fiche :
-  // les cartes « [Prénom Nom] » restent masquées tant qu'il n'y a pas de nom.
+  // Rangée du haut : seulement les personnes qui ont une vraie fiche.
+  const leaders = [coordinator, viceCoordinator].filter(
+    (person): person is OrgPerson => person !== null && !person.isPlaceholder,
+  );
+
+  // Pôles visibles : au moins une personne avec une vraie fiche.
+  // Les cartes « [Prénom Nom] » restent masquées.
   const visibleBranches = branches.filter(
     (branch) => !branch.responsable.isPlaceholder || !branch.adjoint.isPlaceholder,
   );
@@ -149,24 +155,44 @@ export function TeamOrgChart({
   return (
     <>
       <section className="org" aria-label="Organigramme du club">
-        <div className="org-root org-root-duo">
-          {!coordinator.isPlaceholder && (
-            <OrgCard person={coordinator} variant="root" onOpen={setSelected} />
-          )}
-          {viceCoordinator && !viceCoordinator.isPlaceholder && (
-            <OrgCard person={viceCoordinator} variant="root" onOpen={setSelected} />
-          )}
-        </div>
+        {leaders.length === 2 && (
+          <div className="orgx-top">
+            <div className="orgx-leader orgx-leader-left">
+              <OrgCard person={leaders[0]} variant="root" onOpen={setSelected} />
+            </div>
+            <div className="orgx-link" aria-hidden="true" />
+            <div className="orgx-leader orgx-leader-right">
+              <OrgCard person={leaders[1]} variant="root" onOpen={setSelected} />
+            </div>
+          </div>
+        )}
+
+        {leaders.length === 1 && (
+          <div className="orgx-top orgx-top-single">
+            <div className="orgx-leader orgx-leader-solo">
+              <OrgCard person={leaders[0]} variant="root" onOpen={setSelected} />
+            </div>
+          </div>
+        )}
 
         {visibleBranches.length > 0 && (
-          <ul className="org-branches" data-count={visibleBranches.length}>
+          <ul
+            className="orgx-branches"
+            style={{ "--cols": visibleBranches.length } as CSSProperties}
+          >
             {visibleBranches.map((branch) => (
-              <li className="org-col" key={branch.pole}>
+              <li className="orgx-col" key={branch.pole}>
                 {!branch.responsable.isPlaceholder && (
                   <OrgCard person={branch.responsable} variant="lead" onOpen={setSelected} />
                 )}
                 {!branch.adjoint.isPlaceholder && (
-                  <div className="org-adjoint">
+                  <div
+                    className={
+                      branch.responsable.isPlaceholder
+                        ? "orgx-adjoint orgx-adjoint-solo"
+                        : "orgx-adjoint"
+                    }
+                  >
                     <OrgCard person={branch.adjoint} variant="deputy" onOpen={setSelected} />
                   </div>
                 )}

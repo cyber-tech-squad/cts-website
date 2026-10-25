@@ -31,7 +31,7 @@ const teamMemberSchema = z.object({
   slug: nonEmptyText,
   // --- Ajouts pour la page Équipe (tous optionnels : les anciens fichiers restent valides) ---
   level: z.enum(["coordinateur", "responsable", "adjoint"]).optional(),
-  pole: z.enum(["technique", "cybersecurite", "communication", "administratif-finances"]).optional(),
+  pole: z.enum(["finances", "relations-exterieures", "organisation", "communication", "pedagogie"]).optional(),
   filiere: optionalText,
   memberSince: z.union([z.number().int().min(2000), nonEmptyText]).optional(),
   skills: z.array(nonEmptyText).optional(),

@@ -1201,3 +1201,177 @@ body:has(.member-dialog[open]) {
   background: rgb(9 21 16 / 80%);
   border-color: rgb(107 255 174 / 30%);
 }
+
+/* ===== Organigramme : disposition du dessin ===== */
+.orgx-top,
+.orgx-branches {
+  --orgx-line: #7fb8a0;
+  --orgx-gap: 40px; /* hauteur des traits verticaux */
+}
+
+/* Rangée 1 : coordinateur | lien | vice-coordinateur */
+.orgx-top {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+  align-items: stretch;
+  margin-bottom: var(--orgx-gap);
+}
+
+.orgx-leader {
+  display: flex;
+}
+.orgx-leader-left {
+  justify-content: flex-end;
+}
+.orgx-leader-right {
+  justify-content: flex-start;
+}
+.orgx-top .org-card {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* Le lien entre les deux cartes : trait horizontal à mi-hauteur,
+   puis trait vertical qui descend du milieu de ce lien. */
+.orgx-link {
+  position: relative;
+}
+.orgx-link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 2px solid var(--orgx-line);
+}
+.orgx-link::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  bottom: calc(var(--orgx-gap) * -1);
+  left: 50%;
+  border-left: 2px solid var(--orgx-line);
+  transform: translateX(-1px);
+}
+
+/* Une seule personne en haut : un trait descend sous sa carte. */
+.orgx-top-single {
+  display: flex;
+  justify-content: center;
+}
+.orgx-top-single::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: var(--orgx-gap);
+  border-left: 2px solid var(--orgx-line);
+  transform: translateX(-1px);
+}
+
+/* Rangées 2 et 3 : un responsable par colonne, son adjoint dessous */
+.orgx-branches {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  gap: 0 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orgx-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--orgx-gap);
+}
+.orgx-col .org-card {
+  width: 100%;
+}
+
+/* Barre horizontale (qui se prolonge dans l'espace entre les colonnes) */
+.orgx-col::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -10px;
+  right: -10px;
+  border-top: 2px solid var(--orgx-line);
+}
+.orgx-col:first-child::before {
+  left: 50%;
+}
+.orgx-col:last-child::before {
+  right: 50%;
+}
+.orgx-col:only-child::before {
+  display: none;
+}
+
+/* Trait vertical vers la première carte de la colonne */
+.orgx-col::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: var(--orgx-gap);
+  border-left: 2px solid var(--orgx-line);
+  transform: translateX(-1px);
+}
+
+/* Adjoint : trait vertical entre le responsable et lui */
+.orgx-adjoint {
+  position: relative;
+  width: 100%;
+  padding-top: 28px;
+}
+.orgx-adjoint::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 28px;
+  border-left: 2px solid var(--orgx-line);
+  transform: translateX(-1px);
+}
+
+/* Pôle sans responsable : l'adjoint se place directement sous la barre */
+.orgx-adjoint-solo {
+  padding-top: 0;
+}
+.orgx-adjoint-solo::before {
+  display: none;
+}
+
+/* Écrans moyens et téléphone : tout en une colonne, sans barre horizontale */
+@media (max-width: 900px) {
+  .orgx-top {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .orgx-leader-left,
+  .orgx-leader-right {
+    justify-content: center;
+  }
+  .orgx-link,
+  .orgx-top-single::after {
+    display: none;
+  }
+  .orgx-branches {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .orgx-col {
+    padding-top: 0;
+  }
+  .orgx-col::before,
+  .orgx-col::after {
+    display: none;
+  }
+  .orgx-adjoint-solo {
+    padding-top: 0;
+  }
+}

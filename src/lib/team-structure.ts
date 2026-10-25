@@ -1,18 +1,24 @@
 import type { TeamMember } from "@/lib/content";
 
-// Les 4 pôles de l'organigramme (maquette). `id` doit correspondre à la valeur `pole`
-// des fichiers content/team/*.yml.
+// Les pôles de l'organigramme, dans l'ordre d'affichage (de gauche à droite).
+// `id` doit correspondre à la valeur `pole` des fichiers content/team/*.yml.
 export const POLES = [
   {
-    id: "technique",
-    responsableRole: "Responsable technique",
-    adjointRole: "Adjoint(e) technique",
-    description: "Prépare les ateliers et encadre les projets collaboratifs de développement.",
+    id: "finances",
+    responsableRole: "Responsable financier",
+    adjointRole: "Adjoint(e) financier",
+    description: "Fiche à compléter par le bureau.",
   },
   {
-    id: "cybersecurite",
-    responsableRole: "Responsable cybersécurité",
-    adjointRole: "Adjoint(e) cybersécurité",
+    id: "relations-exterieures",
+    responsableRole: "Responsable relations extérieures",
+    adjointRole: "Adjoint(e) relations extérieures",
+    description: "Fiche à compléter par le bureau.",
+  },
+  {
+    id: "organisation",
+    responsableRole: "Responsable organisation",
+    adjointRole: "Adjoint(e) organisation",
     description: "Fiche à compléter par le bureau.",
   },
   {
@@ -22,9 +28,9 @@ export const POLES = [
     description: "Fiche à compléter par le bureau.",
   },
   {
-    id: "administratif-finances",
-    responsableRole: "Responsable administratif et finances",
-    adjointRole: "Adjoint(e) administratif et finances",
+    id: "pedagogie",
+    responsableRole: "Responsable pédagogie",
+    adjointRole: "Adjoint(e) pédagogie",
     description: "Fiche à compléter par le bureau.",
   },
 ] as const;
