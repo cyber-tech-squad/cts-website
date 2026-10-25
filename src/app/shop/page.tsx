@@ -26,12 +26,12 @@ export default async function ShopPage() {
         <section className="how-card" aria-labelledby="how-title">
           <h2 id="how-title">Comment commander ?</h2>
           <ol>
-            <li>Choisis ton article et ta taille.</li>
+            <li>Choisis ton article.</li>
             <li>
-              Clique sur « Commander » : un message est envoyé au bureau. [WhatsApp / formulaire à
-              préciser]
+              Clique sur « Commander » : ton application mail s&apos;ouvre avec un message prêt. Complète
+              ta taille (pour le polo) et ton numéro de téléphone, puis envoie.
             </li>
-            <li>Paiement et retrait à l&apos;UADB. [Modalités à préciser]</li>
+            <li>Le bureau te répond et te précise le paiement et le retrait à l&apos;UADB.</li>
           </ol>
         </section>
 

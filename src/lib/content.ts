@@ -8,6 +8,8 @@ import { parse as parseYaml } from "yaml";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
 const FRONTMATTER_PATTERN = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/;
+// Chemin interne du site : commence par un seul "/", sans espace ni antislash.
+const INTERNAL_PATH_PATTERN = /^\/(?!\/)[^\s\\]*$/;
 
 const nonEmptyText = z.string().trim().min(1);
 const optionalText = nonEmptyText.optional();
@@ -49,8 +51,10 @@ const productSchema = z.object({
   category: z.enum(["Autocollants", "Vêtements", "Accessoires"]).optional(),
   badge: z.enum(["Nouveau", "Disponible", "Bientôt", "Épuisé"]).optional(),
   actionLabel: nonEmptyText,
-  actionUrl: z.string().url().refine(isAllowedActionUrl, {
-    message: "Le lien de commande doit utiliser HTTP, HTTPS ou mailto.",
+  // Chemin interne (ex. /contact?produit=polo) ou lien HTTP, HTTPS, mailto.
+  actionUrl: z.string().trim().refine(isAllowedActionUrl, {
+    message:
+      "Le lien de commande doit être un chemin du site (ex. /contact) ou utiliser HTTP, HTTPS ou mailto.",
   }),
   order: displayOrder,
   slug: nonEmptyText,
@@ -86,6 +90,8 @@ type ContentCollection = "blog" | "events" | "shop" | "team";
 type ContentSchema<T> = z.ZodType<T>;
 
 function isAllowedActionUrl(value: string): boolean {
+  if (INTERNAL_PATH_PATTERN.test(value)) return true;
+
   try {
     return ["http:", "https:", "mailto:"].includes(new URL(value).protocol);
   } catch {

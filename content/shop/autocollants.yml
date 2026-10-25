@@ -5,5 +5,5 @@ image: /images/shop/autocollant-logo.jpg
 category: Autocollants
 badge: Nouveau
 actionLabel: Commander
-actionUrl: https://wa.me/
+actionUrl: /contact?produit=autocollant
 order: 1

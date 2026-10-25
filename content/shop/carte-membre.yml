@@ -4,5 +4,5 @@ description: Ta carte officielle de membre du Cyber Tech Squad, avec ton prénom
 image: /images/shop/carte-membre.jpg
 category: Accessoires
 actionLabel: Commander
-actionUrl: https://wa.me/
+actionUrl: /contact?produit=carte-membre
 order: 3

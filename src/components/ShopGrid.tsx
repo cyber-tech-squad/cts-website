@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, type ReactNode } from "react";
 // `import type` : le type est effacé à la compilation, donc le module "server-only"
 // n'est jamais embarqué dans le navigateur.
@@ -49,6 +50,12 @@ function ProductCard({ product }: { product: Product }) {
   const comingSoon = product.badge === "Bientôt";
   const soldOut = product.badge === "Épuisé";
 
+  const actionUrl = product.actionUrl;
+  // Lien interne (ex. /contact?produit=polo) : même onglet, navigation Next.js.
+  const isInternal = typeof actionUrl === "string" && actionUrl.startsWith("/");
+  const actionClass = `cts-btn${comingSoon ? " cts-btn-outline" : ""}`;
+  const actionText = product.actionLabel || (comingSoon ? "Me prévenir" : "Commander");
+
   return (
     <article className="product">
       <div className={`product-media${product.image ? " has-photo" : ""}`}>
@@ -85,14 +92,13 @@ function ProductCard({ product }: { product: Product }) {
 
           {soldOut ? (
             <span className="cts-btn cts-btn-ghost">Épuisé</span>
+          ) : isInternal ? (
+            <Link className={actionClass} href={actionUrl}>
+              {actionText}
+            </Link>
           ) : (
-            <a
-              className={`cts-btn${comingSoon ? " cts-btn-outline" : ""}`}
-              href={product.actionUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {product.actionLabel || (comingSoon ? "Me prévenir" : "Commander")}
+            <a className={actionClass} href={actionUrl} target="_blank" rel="noopener noreferrer">
+              {actionText}
             </a>
           )}
         </div>

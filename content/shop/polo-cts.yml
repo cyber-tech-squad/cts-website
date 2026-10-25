@@ -4,5 +4,5 @@ description: Polo bleu marine du club, avec le logo CTS sur la poitrine et un gr
 image: /images/shop/polo-cts.jpg
 category: Vêtements
 actionLabel: Commander
-actionUrl: https://wa.me/
+actionUrl: /contact?produit=polo
 order: 2

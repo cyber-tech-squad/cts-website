@@ -1,8 +1,15 @@
 "use client";
 
-import { useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 const SUBJECTS = ["Adhésion", "Commande", "Question", "Partenariat"] as const;
+
+// Produits de la boutique pouvant pré-remplir le message (?produit=...).
+const PRODUCTS: Record<string, string> = {
+  autocollant: "Autocollant Cyber Tech Squad",
+  polo: "Polo Cyber Tech Squad",
+  "carte-membre": "Carte de membre CTS",
+};
 
 type FieldName = "nom" | "email" | "telephone" | "sujet" | "message";
 type FieldErrors = Partial<Record<FieldName, string[]>>;
@@ -50,6 +57,25 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [errors, setErrors] = useState<FieldErrors>({});
   const subjectRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  // Arrivée depuis la boutique (/contact?produit=polo) : on pré-remplit le sujet et le message,
+  // sans rien écraser si le visiteur a déjà écrit quelque chose.
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("produit");
+    const productName = slug ? PRODUCTS[slug] : undefined;
+    if (!productName) return;
+
+    if (subjectRef.current && !subjectRef.current.value) {
+      subjectRef.current.value = "Commande";
+    }
+    if (messageRef.current && !messageRef.current.value) {
+      messageRef.current.value =
+        slug === "polo"
+          ? `Bonjour, je souhaite commander : ${productName}.\nTaille : `
+          : `Bonjour, je souhaite commander : ${productName}.\nQuantité : `;
+    }
+  }, []);
 
   // Les boutons de sujet rapide remplissent le champ, l'utilisateur peut ensuite le modifier.
   function pickSubject(subject: string) {
@@ -176,6 +202,7 @@ export function ContactForm() {
         <Field name="message" label="Message" errors={errors} wide>
           <textarea
             {...describe("message")}
+            ref={messageRef}
             placeholder="Écris ton message ici"
             required
             minLength={10}
