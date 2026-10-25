@@ -1,0 +1,18 @@
+firstName: "Mor Tala"
+lastName: "Dieng"
+role: "Vice-coordinateur"
+level: "coordinateur"
+description: "Futur analyste SOC et ingénieur cybersécurité, passionné par la défense des systèmes, l'infrastructure Linux et la sécurité des réseaux. En route vers un Master MSSI."
+photo: "/team/mor-tala-dieng.jpg"
+order: 2
+filiere: "Licence 3"
+skills:
+  - "HTML"
+  - "CSS"
+  - "Java"
+  - "C (bases)"
+  - "Cybersécurité"
+  - "Réseaux"
+  - "Télécommunications"
+  - "Systèmes Linux"
+linkedin: "https://www.linkedin.com/in/mor-tala-dieng-676667344"

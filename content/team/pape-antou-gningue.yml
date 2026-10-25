@@ -1,0 +1,17 @@
+firstName: Pape Antou
+lastName: Gningue
+role: Responsable financier
+level: responsable
+pole: finances
+description: Responsable financier du club. Fondateur de Yëkëni, une application web de patrimoine familial pensée pour l'Afrique.
+photo: /team/pape-antou-gningue.jpg
+order: 3
+filiere: Licence 2 · Développement d'applications
+skills:
+  - HTML / CSS
+  - Algorithmique
+  - JavaScript
+  - React
+  - Next.js
+  - Bases de données
+  - Publication de contenu numérique

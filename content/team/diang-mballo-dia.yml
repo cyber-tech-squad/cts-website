@@ -1,0 +1,13 @@
+firstName: Diang Mballo
+lastName: Dia
+role: Responsable relations extérieures
+level: responsable
+pole: relations-exterieures
+description: Responsable des relations extérieures du club.
+photo: /team/diang-mballo-dia.jpg
+order: 4
+filiere: Licence 1
+skills:
+  - HTML / CSS
+  - JavaScript
+  - Bases de données (Supabase)

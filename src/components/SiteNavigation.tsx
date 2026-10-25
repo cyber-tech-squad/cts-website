@@ -4,24 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const sections = ["home", "about", "team", "join"] as const;
+// Sections de la page d'accueil suivies au défilement (ids présents dans page.tsx).
+const sections = ["home", "about", "join"] as const;
 type Section = (typeof sections)[number];
 
 type NavigationLink =
   | { label: string; href: string; section: Section }
   | { label: string; href: string; route: string };
 
+// Menu de la maquette v2 : Accueil, À propos, Équipe, Activités, Boutique, Ressources, Contact.
 const links: NavigationLink[] = [
   { label: "Accueil", href: "/#home", section: "home" },
-  { label: "Le club", href: "/#about", section: "about" },
-  { label: "Le bureau", href: "/#team", section: "team" },
-  { label: "Veille", href: "/blog", route: "/blog" },
-  { label: "Événements", href: "/events", route: "/events" },
+  { label: "À propos", href: "/#about", section: "about" },
+  { label: "Équipe", href: "/equipe", route: "/equipe" },
+  { label: "Activités", href: "/events", route: "/events" },
   { label: "Boutique", href: "/shop", route: "/shop" },
+  { label: "Ressources", href: "/blog", route: "/blog" },
+  { label: "Contact", href: "/contact", route: "/contact" },
 ];
 
+// Un lien est actif sur sa page et sur ses sous-pages (ex. /blog/mon-article).
 function routeIsActive(pathname: string, route: string) {
-  return pathname === route || (route === "/blog" && pathname.startsWith("/blog/"));
+  return pathname === route || pathname.startsWith(`${route}/`);
 }
 
 export function SiteNavigation() {
@@ -116,7 +120,7 @@ export function SiteNavigation() {
           }
           onClick={() => setIsMenuOpen(false)}
         >
-          Nous rejoindre <span>↗</span>
+          Adhérer
         </Link>
       </div>
     </nav>

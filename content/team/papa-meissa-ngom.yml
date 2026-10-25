@@ -1,0 +1,11 @@
+firstName: "Papa Meissa"
+lastName: "Ngom"
+role: "Coordinateur"
+level: "coordinateur"
+description: "Coordonne le Cyber Tech Squad au sein de l'Université Alioune Diop de Bambey."
+photo: "/team/papa-meissa-ngom.jpg"
+order: 1
+skills:
+  - "HTML"
+  - "CSS"
+  - "Java"
