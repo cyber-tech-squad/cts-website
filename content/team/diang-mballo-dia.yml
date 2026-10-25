@@ -6,7 +6,8 @@ pole: relations-exterieures
 description: Responsable des relations extérieures du club.
 photo: /team/diang-mballo-dia.jpg
 order: 4
-filiere: Licence 1
+niveau: Licence 1
+filiere: Développement et administration d'applications
 skills:
   - HTML / CSS
   - JavaScript

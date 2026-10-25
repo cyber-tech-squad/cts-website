@@ -5,7 +5,8 @@ level: "coordinateur"
 description: "Futur analyste SOC et ingénieur cybersécurité, passionné par la défense des systèmes, l'infrastructure Linux et la sécurité des réseaux. En route vers un Master MSSI."
 photo: "/team/mor-tala-dieng.jpg"
 order: 2
-filiere: "Licence 3"
+niveau: "Licence 3"
+filiere: "Systèmes, réseaux et télécommunications"
 skills:
   - "HTML"
   - "CSS"

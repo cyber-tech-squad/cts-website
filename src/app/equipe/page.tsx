@@ -6,20 +6,20 @@ import { buildOrgChart } from "@/lib/team-structure";
 
 export const metadata: Metadata = {
   title: "Équipe",
-  description: "Le bureau du Cyber Tech Squad : coordinateur, vice-coordinateur, responsables de pôles et adjoints.",
+  description:
+    "Le bureau du Cyber Tech Squad : coordinateur, vice-coordinateur, responsables de pôles et adjoints.",
 };
 
-// Composant serveur asynchrone : il lit les fichiers content/team/*.yml directement,
-// puis passe des données simples (sérialisables) au composant client TeamOrgChart.
 export default async function TeamPage() {
   const chart = buildOrgChart(await getTeam());
+  const coordinatorName = chart.coordinator.name;
 
   return (
     <PageShell>
       <PageIntro
         label="Équipe"
         title="Les étudiants qui font vivre le club."
-        lead="Le club est coordonné par Papa Meissa Ngom, avec des responsables de pôles et leurs adjoints. Clique sur une personne pour voir sa fiche et ses réseaux."
+        lead={`Le club est coordonné par ${coordinatorName}, avec des responsables de pôles et leurs adjoints. Clique sur une personne pour voir sa fiche et ses réseaux.`}
       />
 
       <TeamOrgChart
@@ -36,8 +36,8 @@ export default async function TeamPage() {
           </div>
           <h2 id="frame-title">Au sein de l&apos;UADB</h2>
           <p>
-            Le club évolue au sein de l&apos;Université Alioune Diop de Bambey. Coordinateur : Papa
-            Meissa Ngom.
+            Le club évolue au sein de l&apos;Université Alioune Diop de Bambey. Coordinateur :{" "}
+            {coordinatorName}.
           </p>
         </section>
 
