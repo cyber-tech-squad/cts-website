@@ -1,0 +1,14 @@
+firstName: "Diewo"
+lastName: "Sow"
+role: "Adjointe responsable financier"
+level: "adjoint"
+pole: "finances"
+description: "Adjointe du responsable financier du Cyber Tech Squad."
+photo: "/team/diewo-sow.jpg"
+order: 10
+niveau: "Licence 2"
+filiere: "Développement et administration d'applications"
+skills:
+  - "HTML"
+  - "Bases du CSS"
+  - "Notions d'algorithmique"

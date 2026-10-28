@@ -1,0 +1,22 @@
+
+firstName: "Khady"
+lastName: "Niang"
+role: "Responsable communication"
+level: "responsable"
+pole: "communication"
+description: "Responsable de la communication du Cyber Tech Squad."
+photo: "/team/khady-niang.jpg"
+order: 9
+niveau: "Licence 2"
+filiere: "Systèmes, réseaux et télécommunications"
+skills:
+  - "Réseaux"
+  - "Systèmes d'exploitation"
+  - "Design graphique"
+  - "Communication"
+  - "HTML"
+  - "CSS"
+  - "PHP"
+  - "Java"
+github: "https://github.com/aissatouniang554-design"
+linkedin: "https://www.linkedin.com/in/khady-niang-01bb70382"

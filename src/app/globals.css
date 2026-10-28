@@ -876,3 +876,53 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== Barre de menus : corrections ===== */
+
+/* 1. Lien actif : le soulignement ne pousse plus le texte vers le haut */
+.site-header nav a[aria-current]:not(.nav-join) {
+  position: relative;
+}
+.site-header nav a[aria-current]:not(.nav-join)::after {
+  position: absolute;
+  right: 0;
+  bottom: -6px;
+  left: 0;
+  display: block;
+  height: 1px;
+  margin-top: 0;
+}
+
+/* 2. Mode clair : texte blanc sur les boutons verts (meilleur contraste) */
+:root[data-theme="light"] .button:not(.button-outline) {
+  color: #fff;
+}
+:root[data-theme="light"] .button-outline:hover {
+  color: #fff;
+}
+
+/* 3. Tablettes : la barre tient sans se chevaucher entre 821 et 960 px */
+@media (min-width: 821px) and (max-width: 960px) {
+  .site-header {
+    padding: 0 20px;
+  }
+  .site-header nav {
+    gap: 14px;
+  }
+}
+
+/* Menu telephone : pas de soulignement dans la liste deroulante */
+@media (max-width: 820px) {
+  .site-header nav a[aria-current]:not(.nav-join)::after {
+    display: none;
+  }
+}
+
+/* 4. Mode sombre "hacker" (optionnel : supprime ce bloc si tu n'en veux pas) */
+:root:not([data-theme="light"]) .site-header nav a[aria-current]:not(.nav-join)::before {
+  content: "> ";
+  white-space: pre;
+}
+:root:not([data-theme="light"]) .site-header nav .nav-join {
+  text-transform: lowercase;
+}

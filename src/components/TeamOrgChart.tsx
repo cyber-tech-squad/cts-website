@@ -102,7 +102,7 @@ function MemberSheet({ person, onClose }: { person: OrgPerson; onClose: () => vo
           <dd>{person.filiere}</dd>
         </div>
         <div>
-          <dt>Rattaché à</dt>
+          <dt>Affiliation</dt>
           <dd>{person.reportsTo}</dd>
         </div>
       </dl>

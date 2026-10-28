@@ -1,41 +1,40 @@
 import type { TeamMember } from "@/lib/content";
 
-// Les pôles de l'organigramme, dans l'ordre d'affichage (de gauche à droite).
-// `id` doit correspondre à la valeur `pole` des fichiers content/team/*.yml.
+export const UNIVERSITE = "Université Alioune Diop de Bambey";
+
 export const POLES = [
   {
     id: "finances",
+    label: "Pôle finances",
     responsableRole: "Responsable financier",
     adjointRole: "Adjoint(e) financier",
-    description: "Fiche à compléter par le bureau.",
   },
   {
     id: "relations-exterieures",
+    label: "Pôle relations extérieures",
     responsableRole: "Responsable relations extérieures",
     adjointRole: "Adjoint(e) relations extérieures",
-    description: "Fiche à compléter par le bureau.",
   },
   {
     id: "organisation",
+    label: "Pôle organisation",
     responsableRole: "Responsable organisation",
     adjointRole: "Adjoint(e) organisation",
-    description: "Fiche à compléter par le bureau.",
   },
   {
     id: "communication",
+    label: "Pôle communication",
     responsableRole: "Responsable communication",
     adjointRole: "Adjoint(e) communication",
-    description: "Fiche à compléter par le bureau.",
   },
   {
     id: "pedagogie",
+    label: "Pôle pédagogie",
     responsableRole: "Responsable pédagogie",
     adjointRole: "Adjoint(e) pédagogie",
-    description: "Fiche à compléter par le bureau.",
   },
 ] as const;
 
-/** Version "à plat" d'une personne : uniquement des chaînes, donc passable à un composant client. */
 export type OrgPerson = {
   id: string;
   name: string;
@@ -44,18 +43,18 @@ export type OrgPerson = {
   levelLabel: string;
   description: string;
   photo: string;
+  niveau: string;
   filiere: string;
-  memberSince: string;
   reportsTo: string;
   skills: string[];
   linkedin: string;
   github: string;
-  /** true tant qu'aucun fichier content/team/*.yml ne correspond : la carte est alors masquée. */
   isPlaceholder: boolean;
 };
 
 export type OrgBranch = {
   pole: string;
+  label: string;
   responsable: OrgPerson;
   adjoint: OrgPerson;
 };
@@ -66,8 +65,6 @@ export type OrgChart = {
   branches: OrgBranch[];
 };
 
-// Prénom composé (« Papa Meissa ») : initiales des deux premiers mots du prénom (PM).
-// Prénom simple : initiale du prénom + initiale du nom.
 function initialsOf(firstName: string, lastName: string): string {
   const words = firstName.trim().split(/\s+/).filter(Boolean);
   if (words.length >= 2) {
@@ -76,7 +73,7 @@ function initialsOf(firstName: string, lastName: string): string {
   return `${words[0]?.[0] ?? ""}${lastName.trim()[0] ?? ""}`.toUpperCase();
 }
 
-function fromMember(member: TeamMember, levelLabel: string, reportsTo: string): OrgPerson {
+function fromMember(member: TeamMember, levelLabel: string): OrgPerson {
   return {
     id: member.slug,
     name: `${member.firstName} ${member.lastName}`,
@@ -85,9 +82,9 @@ function fromMember(member: TeamMember, levelLabel: string, reportsTo: string): 
     levelLabel,
     description: member.description,
     photo: member.photo ?? "",
+    niveau: member.niveau ?? "—",
     filiere: member.filiere ?? "—",
-    memberSince: member.memberSince !== undefined ? String(member.memberSince) : "—",
-    reportsTo,
+    reportsTo: UNIVERSITE,
     skills: member.skills ?? [],
     linkedin: member.linkedin ?? "",
     github: member.github ?? "",
@@ -95,26 +92,18 @@ function fromMember(member: TeamMember, levelLabel: string, reportsTo: string): 
   };
 }
 
-// Emplacement utilisé tant qu'aucun fichier content/team/*.yml ne correspond.
-// Il n'est pas affiché à l'écran (voir TeamOrgChart), mais garde la structure des pôles.
-function placeholder(
-  id: string,
-  role: string,
-  levelLabel: string,
-  reportsTo: string,
-  description: string,
-): OrgPerson {
+function vacancy(id: string, role: string, levelLabel: string): OrgPerson {
   return {
     id,
-    name: "[Prénom Nom]",
-    initials: "PN",
+    name: "",
+    initials: "?",
     role,
     levelLabel,
-    description,
+    description: "",
     photo: "",
-    filiere: "[Filière · Niveau]",
-    memberSince: "[Année]",
-    reportsTo,
+    niveau: "—",
+    filiere: "—",
+    reportsTo: UNIVERSITE,
     skills: [],
     linkedin: "",
     github: "",
@@ -122,8 +111,6 @@ function placeholder(
   };
 }
 
-// Reconnaît un vice-coordinateur que le champ `level` vaille "vice-coordinateur"
-// ou que le mot « vice » figure dans le rôle.
 const isVice = (member: TeamMember) =>
   /vice/i.test(String(member.level)) || /vice/i.test(member.role);
 
@@ -139,18 +126,18 @@ export function buildOrgChart(members: TeamMember[]): OrgChart {
   );
 
   const coordinator: OrgPerson = coordinatorMember
-    ? fromMember(coordinatorMember, "Coordinateur", "Université Alioune Diop de Bambey")
+    ? fromMember(coordinatorMember, "Coordinateur")
     : {
         id: "coordinateur",
         name: "Papa Meissa Ngom",
         initials: "PM",
         role: "Coordinateur",
         levelLabel: "Coordinateur",
-        description: "Coordonne le Cyber Tech Squad au sein de l'Université Alioune Diop de Bambey.",
+        description: `Coordonne le Cyber Tech Squad au sein de l'${UNIVERSITE}.`,
         photo: "",
-        filiere: "[Filière · Niveau]",
-        memberSince: "[Année]",
-        reportsTo: "Université Alioune Diop de Bambey",
+        niveau: "—",
+        filiere: "—",
+        reportsTo: UNIVERSITE,
         skills: [],
         linkedin: "",
         github: "",
@@ -158,7 +145,7 @@ export function buildOrgChart(members: TeamMember[]): OrgChart {
       };
 
   const viceCoordinator: OrgPerson | null = viceMember
-    ? fromMember(viceMember, "Vice-coordinateur", "Université Alioune Diop de Bambey")
+    ? fromMember(viceMember, "Vice-coordinateur")
     : null;
 
   const branches = POLES.map((pole): OrgBranch => {
@@ -170,26 +157,14 @@ export function buildOrgChart(members: TeamMember[]): OrgChart {
     );
 
     const responsable = responsableMember
-      ? fromMember(responsableMember, "Responsable", "Coordinateur")
-      : placeholder(
-          `${pole.id}-responsable`,
-          pole.responsableRole,
-          "Responsable",
-          "Coordinateur",
-          pole.description,
-        );
+      ? fromMember(responsableMember, "Responsable")
+      : vacancy(`${pole.id}-responsable`, pole.responsableRole, "Responsable");
 
     const adjoint = adjointMember
-      ? fromMember(adjointMember, "Adjoint(e)", responsable.role)
-      : placeholder(
-          `${pole.id}-adjoint`,
-          pole.adjointRole,
-          "Adjoint(e)",
-          responsable.role,
-          "Fiche à compléter par le bureau.",
-        );
+      ? fromMember(adjointMember, "Adjoint(e)")
+      : vacancy(`${pole.id}-adjoint`, pole.adjointRole, "Adjoint(e)");
 
-    return { pole: pole.id, responsable, adjoint };
+    return { pole: pole.id, label: pole.label, responsable, adjoint };
   });
 
   return { coordinator, viceCoordinator, branches };

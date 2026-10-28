@@ -28,8 +28,8 @@ export default async function ShopPage() {
           <ol>
             <li>Choisis ton article.</li>
             <li>
-              Clique sur « Commander » : ton application mail s&apos;ouvre avec un message prêt. Complète
-              ta taille (pour le polo) et ton numéro de téléphone, puis envoie.
+              Clique sur « Commander » : le formulaire de contact s&apos;ouvre avec ton article déjà
+              indiqué. Complète ta taille (pour le polo), ton numéro de téléphone, puis envoie.
             </li>
             <li>Le bureau te répond et te précise le paiement et le retrait à l&apos;UADB.</li>
           </ol>
