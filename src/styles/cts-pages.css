@@ -1,11 +1,5 @@
-/* ==========================================================================
-   Pages Équipe / Boutique / Contact — Cyber Tech Squad
-   Tout est limité à .cts-page : aucune règle ne touche les autres pages.
-   Thème clair = maquette v2 ; thème sombre = "mode hacker" (data-theme posé par ThemeProvider).
-   ========================================================================== */
-
 .cts-page {
-  /* Mode hacker (sombre) : valeur par défaut, comme globals.css */
+
   --c-bg: #070b0e;
   --c-surface: rgb(9 21 16 / 80%);
   --c-surface-solid: #0d1418;
@@ -32,7 +26,6 @@
   font-family: var(--font-text);
 }
 
-/* Mode clair : maquette v2 */
 :root[data-theme="light"] .cts-page {
   --c-bg: #eaf6ef;
   --c-surface: #fbfefc;
@@ -84,7 +77,6 @@
   padding: 72px 42px 96px;
 }
 
-/* ---------- En-tête de page ---------- */
 .cts-pill {
   display: inline-flex;
   align-items: center;
@@ -122,7 +114,6 @@
   text-transform: uppercase;
 }
 
-/* ---------- Cartes vertes (coordinateur, encadrement, nous trouver...) ---------- */
 .cts-green {
   border: 1px solid rgb(107 255 174 / 25%);
   border-radius: 24px;
@@ -143,7 +134,6 @@
   outline-color: var(--c-neon);
 }
 
-/* ---------- Boutons ---------- */
 .cts-btn {
   display: inline-flex;
   align-items: center;
@@ -211,9 +201,6 @@
   box-shadow: none;
 }
 
-/* ==========================================================================
-   ÉQUIPE
-   ========================================================================== */
 .org {
   margin: 8px 0 64px;
 }
@@ -224,7 +211,6 @@
   margin: 0 auto;
 }
 
-/* Tige verticale sous le coordinateur */
 .org-root::after {
   position: absolute;
   top: 100%;
@@ -244,7 +230,6 @@
   list-style: none;
 }
 
-/* Ligne horizontale : du centre de la 1re colonne au centre de la 4e */
 .org-branches::before {
   position: absolute;
   top: -18px;
@@ -260,7 +245,6 @@
   flex-direction: column;
 }
 
-/* Tige entre la ligne horizontale et chaque responsable */
 .org-col::before {
   position: absolute;
   top: -18px;
@@ -275,7 +259,6 @@
   margin-top: 22px;
 }
 
-/* Tige entre le responsable et son adjoint */
 .org-adjoint::before {
   position: absolute;
   top: -22px;
@@ -359,7 +342,6 @@
   color: rgb(255 255 255 / 78%);
 }
 
-/* Avatars (initiales ou photo) */
 .avatar {
   position: relative;
   display: grid;
@@ -403,7 +385,6 @@
   font-size: 22px;
 }
 
-/* Encadrement + Partenaires */
 .cts-duo {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -426,18 +407,14 @@
   line-height: 1.7;
 }
 
-.frame-badge {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
+.frame-logo {
+  display: block;
+  width: 96px;
+  height: auto;
   margin-top: 14px;
-  border: 2px solid var(--c-neon);
-  border-radius: 50%;
-  color: var(--c-neon);
-  font-family: var(--font-title);
-  font-size: 10px;
-  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: #ffffff;
 }
 
 .partners-card {
@@ -451,14 +428,39 @@
   font-size: 18px;
 }
 
-.partners-card p {
-  margin: 0;
-  color: var(--c-muted);
-  font-size: 14px;
-  line-height: 1.7;
+.partners-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Fenêtre "fiche membre" (élément <dialog> natif) */
+.partners-logos li {
+  display: flex;
+  width: 132px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.partners-logo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  padding: 8px;
+  border: 1px solid var(--c-line);
+  border-radius: 20px;
+  background: #ffffff;
+  object-fit: contain;
+}
+
 .member-dialog {
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100vh - 48px);
@@ -643,9 +645,6 @@ body:has(.member-dialog[open]) {
   font-weight: 800;
 }
 
-/* ==========================================================================
-   BOUTIQUE
-   ========================================================================== */
 .shop-filters {
   display: flex;
   flex-wrap: wrap;
@@ -872,9 +871,6 @@ body:has(.member-dialog[open]) {
   font-size: 14px;
 }
 
-/* ==========================================================================
-   CONTACT
-   ========================================================================== */
 .contact-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
@@ -991,7 +987,6 @@ body:has(.member-dialog[open]) {
   color: var(--c-danger);
 }
 
-/* Champ piège anti-spam : invisible pour les humains */
 .cts-hp {
   position: absolute;
   left: -9999px;
@@ -1057,9 +1052,6 @@ body:has(.member-dialog[open]) {
   line-height: 1.7;
 }
 
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
 @media (max-width: 900px) {
   .cts-wrap {
     padding: 56px 25px 80px;
@@ -1133,7 +1125,6 @@ body:has(.member-dialog[open]) {
   }
 }
 
-/* ---------- Décor du mode sombre : caractères "matrix" en arrière-plan ---------- */
 .matrix-bg {
   position: fixed;
   inset: 0;
@@ -1147,12 +1138,10 @@ body:has(.member-dialog[open]) {
   display: none;
 }
 
-/* ---------- Photos produit : fond blanc franc ---------- */
 .product-media.has-photo {
   background: #ffffff;
 }
 
-/* ---------- Contact : sujets rapides + WhatsApp ---------- */
 .subject-chips {
   display: flex;
   flex-wrap: wrap;
@@ -1181,7 +1170,6 @@ body:has(.member-dialog[open]) {
   margin-top: 18px;
 }
 
-/* ---------- Mode sombre : pluie de caractères + cartes lumineuses ---------- */
 .matrix-bg {
   opacity: 0.55;
 }
@@ -1202,14 +1190,12 @@ body:has(.member-dialog[open]) {
   border-color: rgb(107 255 174 / 30%);
 }
 
-/* ===== Organigramme : disposition du dessin ===== */
 .orgx-top,
 .orgx-branches {
   --orgx-line: #7fb8a0;
-  --orgx-gap: 40px; /* hauteur des traits verticaux */
+  --orgx-gap: 40px;
 }
 
-/* Rangée 1 : coordinateur | lien | vice-coordinateur */
 .orgx-top {
   position: relative;
   display: grid;
@@ -1232,8 +1218,6 @@ body:has(.member-dialog[open]) {
   max-width: 320px;
 }
 
-/* Le lien entre les deux cartes : trait horizontal à mi-hauteur,
-   puis trait vertical qui descend du milieu de ce lien. */
 .orgx-link {
   position: relative;
 }
@@ -1255,7 +1239,6 @@ body:has(.member-dialog[open]) {
   transform: translateX(-1px);
 }
 
-/* Une seule personne en haut : un trait descend sous sa carte. */
 .orgx-top-single {
   display: flex;
   justify-content: center;
@@ -1270,7 +1253,6 @@ body:has(.member-dialog[open]) {
   transform: translateX(-1px);
 }
 
-/* Rangées 2 et 3 : un responsable par colonne, son adjoint dessous */
 .orgx-branches {
   display: grid;
   grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
@@ -1291,7 +1273,6 @@ body:has(.member-dialog[open]) {
   width: 100%;
 }
 
-/* Barre horizontale (qui se prolonge dans l'espace entre les colonnes) */
 .orgx-col::before {
   content: "";
   position: absolute;
@@ -1310,7 +1291,6 @@ body:has(.member-dialog[open]) {
   display: none;
 }
 
-/* Trait vertical vers la première carte de la colonne */
 .orgx-col::after {
   content: "";
   position: absolute;
@@ -1321,7 +1301,6 @@ body:has(.member-dialog[open]) {
   transform: translateX(-1px);
 }
 
-/* Adjoint : trait vertical entre le responsable et lui */
 .orgx-adjoint {
   position: relative;
   width: 100%;
@@ -1337,7 +1316,6 @@ body:has(.member-dialog[open]) {
   transform: translateX(-1px);
 }
 
-/* Pôle sans responsable : l'adjoint se place directement sous la barre */
 .orgx-adjoint-solo {
   padding-top: 0;
 }
@@ -1345,7 +1323,6 @@ body:has(.member-dialog[open]) {
   display: none;
 }
 
-/* Écrans moyens et téléphone : tout en une colonne, sans barre horizontale */
 @media (max-width: 900px) {
   .orgx-top {
     grid-template-columns: 1fr;
@@ -1376,7 +1353,6 @@ body:has(.member-dialog[open]) {
   }
 }
 
-/* Fiche membre : centrage force */
 .member-dialog[open] {
   position: fixed !important;
   top: 50% !important;
@@ -1385,4 +1361,75 @@ body:has(.member-dialog[open]) {
   bottom: auto !important;
   margin: 0 !important;
   transform: translate(-50%, -50%) !important;
+}
+
+@media (max-width: 900px) {
+  .orgx-top {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .orgx-top .org-card {
+    max-width: none;
+  }
+
+  .org-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+    padding: 14px 16px;
+    text-align: left;
+  }
+
+  .org-card > .avatar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  .org-card > :not(.avatar) {
+    grid-column: 2;
+  }
+
+  .org-name {
+    margin-top: 0;
+  }
+
+  .orgx-branches {
+    gap: 22px;
+  }
+
+  .orgx-col {
+    gap: 12px;
+    margin-left: 8px;
+    padding-left: 22px;
+    border-left: 2px solid var(--orgx-line);
+  }
+
+  .orgx-col .org-card {
+    position: relative;
+  }
+
+  .orgx-col .org-card::before {
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 22px;
+    border-top: 2px solid var(--orgx-line);
+    content: "";
+  }
+
+  .orgx-adjoint {
+    padding-top: 0;
+  }
+
+  .orgx-adjoint::before {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-media {
+    aspect-ratio: 1.45;
+  }
 }
