@@ -4,30 +4,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const sections = ["home", "about", "team", "join"] as const;
-type Section = (typeof sections)[number];
-
-type NavigationLink =
-  | { label: string; href: string; section: Section }
-  | { label: string; href: string; route: string };
+type NavigationLink = {
+  label: string;
+  href: string;
+  route: string;
+  prefix?: string; // les pages qui commencent par ce chemin activent aussi le lien
+};
 
 const links: NavigationLink[] = [
-  { label: "Accueil", href: "/#home", section: "home" },
-  { label: "Le club", href: "/#about", section: "about" },
-  { label: "Le bureau", href: "/#team", section: "team" },
-  { label: "Veille", href: "/blog", route: "/blog" },
-  { label: "Événements", href: "/events", route: "/events" },
+  { label: "Accueil", href: "/", route: "/" },
+  { label: "À propos", href: "/apropos", route: "/apropos" },
+  { label: "Équipe", href: "/equipe", route: "/equipe" },
+  { label: "Activités", href: "/activites", route: "/activites" },
   { label: "Boutique", href: "/shop", route: "/shop" },
+  { label: "Ressources", href: "/ressources", route: "/ressources" },
+  { label: "Contact", href: "/contact", route: "/contact" },
 ];
-
-function routeIsActive(pathname: string, route: string) {
-  return pathname === route || (route === "/blog" && pathname.startsWith("/blog/"));
-}
 
 export function SiteNavigation() {
   const pathname = usePathname();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const [activeSection, setActiveSection] = useState<Section>("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -47,32 +43,6 @@ export function SiteNavigation() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    if (pathname !== "/") return;
-
-    function updateActiveSection() {
-      const marker = window.scrollY + window.innerHeight * 0.35;
-      let current: Section = "home";
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element && element.getBoundingClientRect().top + window.scrollY <= marker)
-          current = section;
-      }
-
-      setActiveSection((previous) => (previous === current ? previous : current));
-    }
-
-    const frame = window.requestAnimationFrame(updateActiveSection);
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("hashchange", updateActiveSection);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("hashchange", updateActiveSection);
-    };
-  }, [pathname]);
-
   return (
     <nav aria-label="Navigation principale">
       <button
@@ -90,16 +60,14 @@ export function SiteNavigation() {
       </button>
       <div id="primary-navigation-links" className={`nav-links${isMenuOpen ? " is-open" : ""}`}>
         {links.map((link) => {
-          const isSectionLink = "section" in link;
-          const active = isSectionLink
-            ? pathname === "/" && activeSection === link.section
-            : routeIsActive(pathname, link.route);
+          const onPrefix = link.prefix ? pathname.startsWith(link.prefix) : false;
+          const active = pathname === link.route || onPrefix;
 
           return (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
-              aria-current={active ? (isSectionLink ? "location" : "page") : undefined}
+              aria-current={active ? "page" : undefined}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
@@ -109,14 +77,10 @@ export function SiteNavigation() {
         <Link
           className="button button-small nav-join"
           href="/adhesion"
-          aria-current={
-            pathname === "/adhesion" || (pathname === "/" && activeSection === "join")
-              ? "page"
-              : undefined
-          }
+          aria-current={pathname === "/adhesion" ? "page" : undefined}
           onClick={() => setIsMenuOpen(false)}
         >
-          Nous rejoindre <span>↗</span>
+          Adhérer <span>↗</span>
         </Link>
       </div>
     </nav>

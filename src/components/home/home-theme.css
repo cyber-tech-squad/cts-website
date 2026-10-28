@@ -214,3 +214,57 @@
 :root[data-theme="light"] .cts-circuit {
   display: none;
 }
+/* ===== Petits écrans : moins de marges pour que le texte respire ===== */
+@media (max-width: 400px) {
+  .cts-home .px-6 {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .cts-home .p-5,
+  .cts-home .p-6,
+  .cts-feature {
+    padding: 16px;
+  }
+  .cts-timeline {
+    padding-left: 22px;
+  }
+  .cts-timeline::before {
+    left: 6px;
+  }
+  .cts-dot {
+    left: -22px;
+  }
+}
+@media (max-width: 340px) {
+  .cts-home .px-6 {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .cts-home .p-5,
+  .cts-home .p-6,
+  .cts-feature {
+    padding: 14px;
+  }
+  .cts-timeline {
+    padding-left: 18px;
+  }
+  .cts-timeline::before {
+    left: 5px;
+  }
+  .cts-dot {
+    left: -18px;
+    width: 12px;
+    height: 12px;
+  }
+}
+/* Mobile : on retire la timeline pour gagner de la largeur */
+@media (max-width: 640px) {
+  .cts-timeline {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  .cts-timeline::before,
+  .cts-dot {
+    display: none !important;
+  }
+}
