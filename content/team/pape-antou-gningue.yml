@@ -6,7 +6,8 @@ pole: finances
 description: Responsable financier du club. Fondateur de Yëkëni, une application web de patrimoine familial pensée pour l'Afrique.
 photo: /team/pape-antou-gningue.jpg
 order: 3
-filiere: Licence 2 · Développement d'applications
+niveau: Licence 2
+filiere: Développement et administration d'applications
 skills:
   - HTML / CSS
   - Algorithmique

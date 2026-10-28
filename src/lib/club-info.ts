@@ -1,6 +1,3 @@
-// src/lib/club-info.ts
-// Informations officielles du club Cyber Tech Squad (CTS)
-
 export type ClubSocial = {
   label: string;
   href: string;
@@ -31,6 +28,10 @@ export const CLUB_INFO: ClubInfo = {
     {
       label: "TikTok",
       href: "https://www.tiktok.com/@cyber_tech_squad?_r=1&_t=ZS-9ApEAxofNRf",
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/cyber_tech_squad",
     },
   ],
 };

@@ -5,6 +5,8 @@ level: "coordinateur"
 description: "Coordonne le Cyber Tech Squad au sein de l'Université Alioune Diop de Bambey."
 photo: "/team/papa-meissa-ngom.jpg"
 order: 1
+niveau: "Licence 2"
+filiere: "Développement et administration d'applications"
 skills:
   - "HTML"
   - "CSS"

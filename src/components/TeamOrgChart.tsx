@@ -7,6 +7,13 @@ import type { OrgBranch, OrgPerson } from "@/lib/team-structure";
 
 type AvatarSize = "sm" | "md" | "lg";
 type CardVariant = "root" | "lead" | "deputy";
+type OpenHandler = (person: OrgPerson) => void;
+
+function sizeOf(variant: CardVariant): AvatarSize {
+  if (variant === "root") return "lg";
+  if (variant === "lead") return "md";
+  return "sm";
+}
 
 function Avatar({ person, size }: { person: OrgPerson; size: AvatarSize }) {
   return (
@@ -23,9 +30,8 @@ function OrgCard({
 }: {
   person: OrgPerson;
   variant: CardVariant;
-  onOpen: (person: OrgPerson) => void;
+  onOpen: OpenHandler;
 }) {
-  const size: AvatarSize = variant === "root" ? "lg" : variant === "lead" ? "md" : "sm";
   return (
     <button
       type="button"
@@ -34,11 +40,37 @@ function OrgCard({
       aria-haspopup="dialog"
       aria-label={`Voir la fiche de ${person.name}, ${person.role}`}
     >
-      <Avatar person={person} size={size} />
+      <Avatar person={person} size={sizeOf(variant)} />
       <span className="org-name">{person.name}</span>
       <span className="org-role">{person.role}</span>
       <span className="org-more">Voir la fiche →</span>
     </button>
+  );
+}
+
+function VacantCard({ person, variant }: { person: OrgPerson; variant: CardVariant }) {
+  return (
+    <div className={`org-card org-card-${variant} org-vacant`}>
+      <Avatar person={person} size={sizeOf(variant)} />
+      <span className="org-role">{person.role}</span>
+      <span className="org-vacant-note">Poste à pourvoir</span>
+    </div>
+  );
+}
+
+function Slot({
+  person,
+  variant,
+  onOpen,
+}: {
+  person: OrgPerson;
+  variant: CardVariant;
+  onOpen: OpenHandler;
+}) {
+  return person.isPlaceholder ? (
+    <VacantCard person={person} variant={variant} />
+  ) : (
+    <OrgCard person={person} variant={variant} onOpen={onOpen} />
   );
 }
 
@@ -62,15 +94,15 @@ function MemberSheet({ person, onClose }: { person: OrgPerson; onClose: () => vo
 
       <dl className="info-tiles">
         <div>
+          <dt>Niveau</dt>
+          <dd>{person.niveau}</dd>
+        </div>
+        <div>
           <dt>Filière</dt>
           <dd>{person.filiere}</dd>
         </div>
         <div>
-          <dt>Membre depuis</dt>
-          <dd>{person.memberSince}</dd>
-        </div>
-        <div>
-          <dt>Rattaché à</dt>
+          <dt>Affiliation</dt>
           <dd>{person.reportsTo}</dd>
         </div>
       </dl>
@@ -128,12 +160,9 @@ export function TeamOrgChart({
   viceCoordinator: OrgPerson | null;
   branches: OrgBranch[];
 }) {
-  // La personne dont la fiche est ouverte (null = fenêtre fermée).
   const [selected, setSelected] = useState<OrgPerson | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // On synchronise l'état React avec l'élément <dialog> natif :
-  // showModal() gère pour nous le focus, la touche Échap et le fond assombri.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -141,15 +170,8 @@ export function TeamOrgChart({
     if (!selected && dialog.open) dialog.close();
   }, [selected]);
 
-  // Rangée du haut : seulement les personnes qui ont une vraie fiche.
   const leaders = [coordinator, viceCoordinator].filter(
     (person): person is OrgPerson => person !== null && !person.isPlaceholder,
-  );
-
-  // Pôles visibles : au moins une personne avec une vraie fiche.
-  // Les cartes « [Prénom Nom] » restent masquées.
-  const visibleBranches = branches.filter(
-    (branch) => !branch.responsable.isPlaceholder || !branch.adjoint.isPlaceholder,
   );
 
   return (
@@ -175,31 +197,16 @@ export function TeamOrgChart({
           </div>
         )}
 
-        {visibleBranches.length > 0 && (
-          <ul
-            className="orgx-branches"
-            style={{ "--cols": visibleBranches.length } as CSSProperties}
-          >
-            {visibleBranches.map((branch) => (
-              <li className="orgx-col" key={branch.pole}>
-                {!branch.responsable.isPlaceholder && (
-                  <OrgCard person={branch.responsable} variant="lead" onOpen={setSelected} />
-                )}
-                {!branch.adjoint.isPlaceholder && (
-                  <div
-                    className={
-                      branch.responsable.isPlaceholder
-                        ? "orgx-adjoint orgx-adjoint-solo"
-                        : "orgx-adjoint"
-                    }
-                  >
-                    <OrgCard person={branch.adjoint} variant="deputy" onOpen={setSelected} />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className="orgx-branches" style={{ "--cols": branches.length } as CSSProperties}>
+          {branches.map((branch) => (
+            <li className="orgx-col" key={branch.pole}>
+              <Slot person={branch.responsable} variant="lead" onOpen={setSelected} />
+              <div className="orgx-adjoint">
+                <Slot person={branch.adjoint} variant="deputy" onOpen={setSelected} />
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <dialog
@@ -208,7 +215,6 @@ export function TeamOrgChart({
         aria-labelledby="member-dialog-title"
         onClose={() => setSelected(null)}
         onClick={(event) => {
-          // Un clic sur le fond assombri a pour cible le <dialog> lui-même.
           if (event.target === event.currentTarget) setSelected(null);
         }}
       >
