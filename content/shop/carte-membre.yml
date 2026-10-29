@@ -1,0 +1,8 @@
+name: Carte de membre CTS
+price: 1000
+description: Ta carte officielle de membre du Cyber Tech Squad, avec ton prénom, ton nom et ta filière.
+image: /images/shop/carte-membre.jpg
+category: Accessoires
+actionLabel: Commander
+actionUrl: /contact?produit=carte-membre
+order: 3

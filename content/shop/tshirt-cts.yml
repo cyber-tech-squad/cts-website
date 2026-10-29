@@ -1,8 +1,0 @@
-name: T-shirt Cyber Tech Squad
-price: 5000
-description: T-shirt du club, coton confortable, plusieurs tailles disponibles.
-image: /images/shop-tshirt.svg
-badge: Nouveau
-actionLabel: Commander
-actionUrl: https://wa.me/
-order: 1
