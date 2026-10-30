@@ -1541,3 +1541,8 @@ body:has(.member-dialog[open]) {
 .contact-side .side-card {
   height: 100%;
 }
+
+.cts-page h2,
+.cts-page h3 {
+  font-weight: 700;
+}
