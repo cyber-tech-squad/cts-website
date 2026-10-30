@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContactForm } from "@/components/ContactForm";
 import { PageIntro, PageShell } from "@/components/PageShell";
-import { CLUB_INFO } from "@/lib/club-info";
+import { SocialIcon, iconNameFor } from "@/components/SocialIcon";
+import { CLUB_INFO, whatsappLink } from "@/lib/club-info";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const questionHref = `mailto:${CLUB_INFO.email}?subject=${encodeURIComponent("Question pour le Cyber Tech Squad")}`;
+  const orderHref = whatsappLink(
+    CLUB_INFO.orderPhone,
+    "Bonjour, je souhaite commander un article du Cyber Tech Squad.\nArticle : \nQuantité : ",
+  );
+
   return (
     <PageShell>
       <PageIntro
@@ -19,7 +25,42 @@ export default function ContactPage() {
       />
 
       <div className="contact-grid">
-        <ContactForm />
+        <section className="form-card" aria-labelledby="actions-title">
+          <h2 id="actions-title">Écris-nous directement</h2>
+          <p className="contact-intro">
+            Choisis ce qui correspond à ta demande. Le bureau te répond dès que possible.
+          </p>
+
+          <ul className="action-list">
+            <li className="action-item">
+              <div>
+                <h3>Une question</h3>
+                <p>Écris-nous un e-mail, nous te répondons dès que possible.</p>
+              </div>
+              <a className="cts-btn" href={questionHref}>
+                Envoyer un e-mail
+              </a>
+            </li>
+            <li className="action-item">
+              <div>
+                <h3>Commander un article</h3>
+                <p>Polo, autocollant ou carte de membre : commande directement sur WhatsApp.</p>
+              </div>
+              <a className="cts-btn" href={orderHref} target="_blank" rel="noopener noreferrer">
+                Commander
+              </a>
+            </li>
+            <li className="action-item">
+              <div>
+                <h3>Rejoindre le club</h3>
+                <p>Découvre comment adhérer et envoie-nous ta demande.</p>
+              </div>
+              <Link className="cts-btn" href="/adhesion">
+                Adhérer
+              </Link>
+            </li>
+          </ul>
+        </section>
 
         <aside className="contact-side">
           <section className="cts-green side-card" aria-labelledby="find-title">
@@ -33,45 +74,32 @@ export default function ContactPage() {
                 </dd>
               </div>
               <div>
-                <dt>E-mail</dt>
+                <dt>Contact et réseaux</dt>
                 <dd>
-                  {CLUB_INFO.email ? (
-                    <a href={`mailto:${CLUB_INFO.email}`}>{CLUB_INFO.email}</a>
-                  ) : (
-                    "[adresse e-mail du club]"
-                  )}
-                </dd>
-              </div>
-              <div>
-                <dt>Réseaux sociaux</dt>
-                <dd>
-                  {CLUB_INFO.socials.length > 0
-                    ? CLUB_INFO.socials.map((social) => (
-                        <p
-                          key={social.href}
-                          style={{ margin: "0 0 0.5rem", wordBreak: "break-all" }}
+                  <ul className="social-list">
+                    <li>
+                      <a className="social-link" href={`mailto:${CLUB_INFO.email}`}>
+                        <SocialIcon name="mail" />
+                        <span>E-mail</span>
+                      </a>
+                    </li>
+                    {CLUB_INFO.socials.map((social) => (
+                      <li key={social.href}>
+                        <a
+                          className="social-link"
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          {social.label} :{" "}
-                          <a href={social.href} target="_blank" rel="noopener noreferrer">
-                            {social.href}
-                          </a>
-                        </p>
-                      ))
-                    : "Bientôt disponible"}
+                          <SocialIcon name={iconNameFor(social.label)} />
+                          <span>{social.label}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </dd>
               </div>
             </dl>
-          </section>
-
-          <section className="side-card side-light" aria-labelledby="join-title">
-            <h2 id="join-title">Comment adhérer ?</h2>
-            <p>
-              Ouvert aux étudiants de l&apos;UADB, débutants compris. Envoie-nous ton message avec ta
-              filière et ce qui t&apos;intéresse.
-            </p>
-            <Link className="cts-btn cts-btn-outline" href="/adhesion">
-              Voir la page d&apos;adhésion
-            </Link>
           </section>
         </aside>
       </div>
