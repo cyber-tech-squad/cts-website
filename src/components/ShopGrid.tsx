@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState, type ReactNode } from "react";
-// `import type` : le type est effacé à la compilation, donc le module "server-only"
-// n'est jamais embarqué dans le navigateur.
+import { CLUB_INFO, whatsappLink } from "@/lib/club-info";
 import type { Product } from "@/lib/content";
 
 const FILTERS = ["Tout voir", "Autocollants", "Vêtements", "Accessoires"] as const;
@@ -45,14 +43,28 @@ function ProductIcon({ category }: { category: Category }) {
   );
 }
 
+function buildActionHref(product: Product, comingSoon: boolean): string {
+  const actionUrl = product.actionUrl;
+
+  if (typeof actionUrl === "string" && /^https?:\/\//.test(actionUrl)) {
+    return actionUrl;
+  }
+
+  const price =
+    product.price > 0 ? ` (${fcfa.format(product.price).replace(/\s/g, " ")} FCFA)` : "";
+
+  const message = comingSoon
+    ? `Bonjour, merci de me prévenir dès que ce produit sera disponible : ${product.name}.`
+    : `Bonjour, je souhaite commander : ${product.name}${price}.\nQuantité : `;
+
+  return whatsappLink(CLUB_INFO.orderPhone, message);
+}
+
 function ProductCard({ product }: { product: Product }) {
   const category: Category = product.category ?? "Accessoires";
   const comingSoon = product.badge === "Bientôt";
   const soldOut = product.badge === "Épuisé";
 
-  const actionUrl = product.actionUrl;
-  // Lien interne (ex. /contact?produit=polo) : même onglet, navigation Next.js.
-  const isInternal = typeof actionUrl === "string" && actionUrl.startsWith("/");
   const actionClass = `cts-btn${comingSoon ? " cts-btn-outline" : ""}`;
   const actionText = product.actionLabel || (comingSoon ? "Me prévenir" : "Commander");
 
@@ -92,12 +104,13 @@ function ProductCard({ product }: { product: Product }) {
 
           {soldOut ? (
             <span className="cts-btn cts-btn-ghost">Épuisé</span>
-          ) : isInternal ? (
-            <Link className={actionClass} href={actionUrl}>
-              {actionText}
-            </Link>
           ) : (
-            <a className={actionClass} href={actionUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              className={actionClass}
+              href={buildActionHref(product, comingSoon)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {actionText}
             </a>
           )}

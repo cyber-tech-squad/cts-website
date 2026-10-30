@@ -10,6 +10,8 @@ export type ClubInfo = {
   place: string;
   email: string;
   whatsapp: string;
+  orderPhone: string;
+  joinPhone: string;
   socials: ClubSocial[];
 };
 
@@ -20,6 +22,8 @@ export const CLUB_INFO: ClubInfo = {
   place: "",
   email: "ctechsquad@gmail.com",
   whatsapp: "",
+  orderPhone: "221775245358",
+  joinPhone: "221779106523",
   socials: [
     {
       label: "WhatsApp",
@@ -33,7 +37,15 @@ export const CLUB_INFO: ClubInfo = {
       label: "Instagram",
       href: "https://www.instagram.com/cyber_tech_squad",
     },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/cyber-tech-squad-cts-723731351",
+    },
   ],
 };
 
 export const clubInfo = CLUB_INFO;
+
+export function whatsappLink(phone: string, message: string): string {
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}

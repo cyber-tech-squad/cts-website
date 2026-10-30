@@ -14,8 +14,8 @@
   --c-line-strong: rgb(107 255 174 / 38%);
   --c-neon: #6bffae;
   --c-danger: #ff8a80;
-  --font-title: var(--font-unbounded), "Unbounded", ui-sans-serif, system-ui, sans-serif;
-  --font-text: var(--font-hanken), "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-title: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-text: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
 
   position: relative;
   min-height: calc(100vh - 88px);
@@ -875,7 +875,7 @@ body:has(.member-dialog[open]) {
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .form-card {
@@ -1432,4 +1432,117 @@ body:has(.member-dialog[open]) {
   .product-media {
     aspect-ratio: 1.45;
   }
+}
+
+.form-card h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.contact-intro {
+  margin: 0 0 24px;
+  color: var(--c-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.action-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--c-line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--c-pale) 55%, var(--c-surface));
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.action-item:hover {
+  border-color: var(--c-line-strong);
+  transform: translateY(-2px);
+}
+
+.action-item h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.action-item p {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.action-item .cts-btn {
+  flex: 0 0 auto;
+}
+
+.social-list {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-card .social-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 14px;
+  background: rgb(255 255 255 / 6%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.side-card .social-link:hover {
+  background: rgb(255 255 255 / 14%);
+  transform: translateY(-1px);
+}
+
+.social-link svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 600px) {
+  .action-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-item .cts-btn {
+    width: 100%;
+  }
+}
+
+.contact-side .side-card {
+  height: 100%;
+}
+
+.cts-page h2,
+.cts-page h3 {
+  font-weight: 700;
 }

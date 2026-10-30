@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageIntro, PageShell } from "@/components/PageShell";
 import { ShopGrid } from "@/components/ShopGrid";
 import { getProducts } from "@/lib/content";
@@ -28,8 +27,8 @@ export default async function ShopPage() {
           <ol>
             <li>Choisis ton article.</li>
             <li>
-              Clique sur « Commander » : le formulaire de contact s&apos;ouvre avec ton article déjà
-              indiqué. Complète ta taille (pour le polo), ton numéro de téléphone, puis envoie.
+              Clique sur « Commander » : WhatsApp s&apos;ouvre avec ton article déjà indiqué.
+              Précise la quantité (et ta taille pour le polo), puis envoie le message.
             </li>
             <li>Le bureau te répond et te précise le paiement et le retrait à l&apos;UADB.</li>
           </ol>
@@ -44,16 +43,6 @@ export default async function ShopPage() {
           </p>
         </section>
       </div>
-
-      <section className="cts-green cta-band" aria-labelledby="cta-title">
-        <div>
-          <h2 id="cta-title">Prêt à rejoindre la Squad ?</h2>
-          <p>Ouvert à tous les étudiants de l&apos;UADB, quel que soit le niveau.</p>
-        </div>
-        <Link className="cts-btn cts-btn-neon" href="/adhesion">
-          Adhérer au club
-        </Link>
-      </section>
     </PageShell>
   );
 }
