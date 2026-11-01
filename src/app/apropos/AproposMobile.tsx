@@ -11,35 +11,33 @@ import {
   steps,
 } from "./apropos-data";
 
-/* ---------- Notre mission : carte + « Pour qui ? » dépliable ---------- */
+/* ---------- Notre mission : un seul bloc, « Pour qui ? » dépliable ---------- */
 export function MissionBlock() {
   return (
-    <div>
-      <div className="cts-feature apropos-panel flex flex-col items-start gap-1.5">
-        <h3 className="font-[family-name:var(--h-font-title)] text-[13px] font-bold leading-snug">
-          Rendre le numérique plus sûr, avec les étudiants de l&apos;UADB.
-        </h3>
-        <p className="text-xs leading-relaxed opacity-90">
-          Développer les compétences des étudiants en cybersécurité, promouvoir
-          les bonnes pratiques numériques et encourager une culture de
-          collaboration, d&apos;innovation et de responsabilité.
-        </p>
-      </div>
-      <details className="cts-card apropos-details">
-        <summary className="apropos-summary">
-          <span>Pour qui ?</span>
+    <div className="cts-feature apropos-mission">
+      <h3 className="font-[family-name:var(--h-font-title)] text-[13px] font-bold leading-snug">
+        Rendre le numérique plus sûr, avec les étudiants de l&apos;UADB.
+      </h3>
+      <p className="m-0 text-xs leading-relaxed opacity-90">
+        Développer les compétences des étudiants en cybersécurité, promouvoir
+        les bonnes pratiques numériques et encourager une culture de
+        collaboration, d&apos;innovation et de responsabilité.
+      </p>
+      <details className="apropos-who">
+        <summary className="apropos-who-summary">
+          <span>
+            <strong>Pour qui ?</strong> Tous les étudiants curieux, quel que
+            soit le niveau.
+          </span>
           <ChevronDown aria-hidden className="apropos-chevron size-4" />
         </summary>
-        <div className="apropos-details-body flex flex-col gap-2">
-          <p className="m-0 text-xs font-bold leading-snug">
-            Tous les étudiants curieux, quel que soit le niveau.
-          </p>
-          <p className="m-0 text-xs leading-relaxed text-[var(--h-muted)]">
+        <div className="apropos-who-body">
+          <p className="m-0 text-xs leading-relaxed opacity-90">
             Le club s&apos;adresse aux étudiants de l&apos;Université Alioune
             Diop de Bambey qui s&apos;intéressent à l&apos;informatique, à la
             cybersécurité, aux technologies et à l&apos;innovation.
           </p>
-          <p className="m-0 text-xs leading-relaxed text-[var(--h-muted)]">
+          <p className="m-0 text-xs leading-relaxed opacity-90">
             Pas besoin d&apos;être expert : on commence par les bases et on
             avance projet après projet.
           </p>
@@ -134,12 +132,12 @@ export function ApproachSteps() {
   );
 }
 
-/* ---------- Pourquoi rejoindre : tuiles + pastilles ---------- */
+/* ---------- Pourquoi rejoindre : liste + 4 étapes + pastilles ---------- */
 const actions = [
   "Participer aux séances",
   "Proposer des idées",
   "Contribuer aux projets",
-  "Respecter les règles du club",
+  "Respecter les règles",
 ];
 const qualities = [
   "Curiosité",
@@ -150,41 +148,35 @@ const qualities = [
 
 export function JoinSection() {
   return (
-    <div>
-      <ul className="apropos-gains">
+    <div className="apropos-join">
+      <ul className="cts-card apropos-gains-list">
         {gains.map((gain) => (
-          <li
-            key={gain}
-            className="cts-card flex items-start gap-1.5 text-[11.5px] leading-snug"
-          >
-            <Check
-              aria-hidden
-              className="mt-px size-3.5 shrink-0 text-[var(--h-accent)]"
-              strokeWidth={2.5}
-            />
+          <li key={gain}>
+            <span className="apropos-check" aria-hidden>
+              <Check className="size-3" strokeWidth={3} />
+            </span>
             <span>{gain}</span>
           </li>
         ))}
       </ul>
-      <div className="cts-card apropos-panel apropos-join-card">
-        <p className="apropos-eyebrow">COMMENT PARTICIPER ?</p>
-        <div className="apropos-pills">
-          {actions.map((label) => (
-            <span key={label} className="apropos-pill">
-              {label}
-            </span>
-          ))}
-        </div>
-        <p className="apropos-eyebrow apropos-eyebrow--spaced">
-          L&apos;ESSENTIEL POUR BIEN COMMENCER
-        </p>
-        <div className="apropos-pills">
-          {qualities.map((label) => (
-            <span key={label} className="apropos-pill">
-              {label}
-            </span>
-          ))}
-        </div>
+
+      <p className="apropos-eyebrow">COMMENT PARTICIPER ?</p>
+      <ol className="apropos-how">
+        {actions.map((label, index) => (
+          <li key={label} className="cts-card">
+            <span className="apropos-how-num">0{index + 1}</span>
+            <span>{label}</span>
+          </li>
+        ))}
+      </ol>
+
+      <p className="apropos-eyebrow">L&apos;ESSENTIEL POUR BIEN COMMENCER</p>
+      <div className="apropos-pills">
+        {qualities.map((label) => (
+          <span key={label} className="apropos-pill">
+            {label}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -238,7 +230,7 @@ export function ParcoursTimeline() {
   );
 }
 
-/* ---------- Identité du club : cartes bleu nuit + logos ---------- */
+/* ---------- Identité du club : cartes + logos ---------- */
 export function IdentityCards() {
   return (
     <ul className="apropos-id">

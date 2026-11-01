@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { LucideIcon } from "lucide-react";
 import { Check, ShieldCheck } from "lucide-react";
+import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -21,6 +22,13 @@ import {
   ParcoursTimeline,
 } from "./AproposMobile";
 import "./apropos.css";
+
+/* Inter chargée uniquement pour cette page (sans toucher au layout) */
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--apropos-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Le club — Cyber Tech Squad",
@@ -71,7 +79,7 @@ export default function ClubPage() {
       <SiteHeader />
       <main>
         <HomeShell>
-          <div className="apropos-page">
+          <div className={`apropos-page ${inter.variable}`}>
             {/* Héros */}
             <section className="apropos-hero mx-auto grid max-w-[1120px] items-center gap-10 px-6 py-12 md:grid-cols-[1.3fr_0.7fr] md:px-10 md:py-16">
               <div className="apropos-hero-text flex flex-col items-start gap-5">
@@ -354,21 +362,35 @@ export default function ClubPage() {
               </div>
             </div>
 
-            {/* Appel à l'adhésion */}
+            {/* Pied de page À propos */}
             <div className="apropos-cta-wrap mx-auto max-w-[1120px] px-6 pb-16 md:px-10">
-              <section className="apropos-cta cts-feature flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+              <section className="apropos-cta cts-feature flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <h2 className="font-[family-name:var(--h-font-title)] text-lg font-bold">
-                    Prêt à rejoindre la Squad ?
+                    Une question sur le club ?
                   </h2>
                   <p className="text-sm opacity-80">
-                    Ouvert à tous les étudiants de l&apos;UADB, quel que soit le
-                    niveau.
+                    Découvre l&apos;équipe ou écris-nous, on te répond avec
+                    plaisir.
                   </p>
                 </div>
-                <Link href="/adhesion" className="cts-btn">
-                  Adhérer au club
-                </Link>
+                <div className="apropos-cta-actions flex flex-wrap gap-2">
+                  <Link href="/equipe" className="cts-btn">
+                    Découvrir l&apos;équipe
+                  </Link>
+                  <Link href="/contact" className="cts-btn apropos-btn-ghost">
+                    Nous contacter
+                  </Link>
+                </div>
+                <div className="apropos-cta-foot flex flex-col gap-1 text-xs opacity-80">
+                  <p className="m-0 flex items-center gap-2">
+                    <ShieldCheck aria-hidden className="size-3.5 shrink-0" />
+                    Activités menées dans un cadre éthique et légal.
+                  </p>
+                  <p className="m-0">
+                    © Cyber Tech Squad · UADB, Bambey, Sénégal
+                  </p>
+                </div>
               </section>
             </div>
           </div>
